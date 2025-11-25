@@ -1,0 +1,23 @@
+# Terraform variables configuration
+# Copy this file to terraform.tfvars and customize as needed
+
+# AWS Configuration
+aws_region = "us-east-1"
+environment = "production"
+project_name = "hybrid-ddos-detection"
+
+# EC2 Configuration
+instance_type = "t3.medium"
+key_name = "your-key-pair-name"  # Replace with your actual key pair
+
+# Auto Scaling Configuration
+min_instances = 2
+max_instances = 10
+desired_instances = 3
+
+# Tags
+additional_tags = {
+  Owner = "DevOps Team"
+  CostCenter = "Security"
+  Backup = "Required"
+}

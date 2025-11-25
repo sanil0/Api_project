@@ -1,0 +1,20 @@
+[Unit]
+Description=DDoS Gateway with ML Detection
+After=network.target
+
+[Service]
+Type=simple
+User=ddos
+WorkingDirectory=/home/ddos/ml_gateway
+Environment="PATH=/home/ddos/ml_gateway/venv/bin"
+Environment="ENABLE_DASHBOARD_LOGGING=true"
+Environment="DASHBOARD_URL=http://10.0.1.230:8001"
+Environment="GATEWAY_CONFIG=/home/ddos/ml_gateway/config.json"
+ExecStart=/home/ddos/ml_gateway/venv/bin/python /home/ddos/ml_gateway/app.py
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

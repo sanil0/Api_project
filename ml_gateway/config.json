@@ -1,0 +1,77 @@
+{
+  "description": "ML Gateway Configuration for Pre-LB Architecture",
+  "version": "2.0.0",
+  
+  "gateway": {
+    "port": 80,
+    "host": "0.0.0.0",
+    "workers": 4,
+    "timeout": 30,
+    "description": "Main gateway listening on port 80 (public-facing)"
+  },
+  
+  "backend_targets": [
+    {
+      "id": "backend-alb",
+      "host": "10.0.101.216",
+      "port": 9000,
+      "protocol": "http",
+      "priority": 1,
+      "enabled": true,
+      "description": "Internal ALB routing to private webservers"
+    }
+  ],
+  
+  "load_balancing": {
+    "strategy": "round-robin",
+    "description": "Round-robin load balancing across multiple backends",
+    "health_check": {
+      "enabled": true,
+      "interval_seconds": 30,
+      "timeout_seconds": 5,
+      "path": "/health",
+      "expected_status": 200
+    }
+  },
+  
+  "ml_detection": {
+    "enabled": true,
+    "threshold": 0.8,
+    "window_size": 300,
+    "description": "ML-based DDoS detection configuration"
+  },
+  
+  "models": {
+    "stage1": {
+      "path": "models/hybrid_stage1_model_v2.pkl",
+      "scaler_path": "models/hybrid_stage1_scaler_v2.pkl",
+      "description": "Binary DDoS detection model (Random Forest)"
+    },
+    "stage2": {
+      "path": "models/hybrid_stage2_model_v3_real_benign.pkl",
+      "scaler_path": "models/hybrid_stage2_scaler_v3_real_benign.pkl",
+      "description": "Attack type classification model (XGBoost)"
+    }
+  },
+  
+  "logging": {
+    "level": "INFO",
+    "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    "file": "/var/log/ml-gateway.log"
+  },
+  
+  "monitoring": {
+    "metrics_enabled": true,
+    "stats_endpoint": "/stats",
+    "metrics_endpoint": "/metrics",
+    "backends_endpoint": "/backends"
+  },
+  
+  "security": {
+    "cors_enabled": true,
+    "cors_origins": ["*"],
+    "allow_methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    "rate_limiting_enabled": false,
+    "description": "Security settings for gateway"
+  }
+}

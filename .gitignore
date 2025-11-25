@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# Build outputs
+build/
+dist/
+*.egg
+*.tar.gz
+
+# Logs
+*.log
+logs/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data files (large)
+data_cicddos/
+*.csv
+
+# Models (large)
+models/*.h5
+models/*.pkl
+models/*.joblib
+
+# Temporary
+*.tmp
+temp/
+.tmp/
+
+# Dashboard build
+dashboard/frontend/build/node_modules/
